@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { Navbar } from './layout/navbar/navbar';
+import { Footer } from './layout/footer/footer';
+
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [RouterModule, Navbar, Footer],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -11,3 +13,5 @@ import { NxWelcome } from './nx-welcome';
 export class App {
   protected title = 'frontend';
 }
+
+
