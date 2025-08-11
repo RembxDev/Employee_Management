@@ -1,0 +1,117 @@
+<div class="flex items-center justify-between gap-2 mb-4">
+  <h1 class="text-2xl font-semibold">Pracownicy</h1>
+  <div class="join">
+    <input
+      class="input input-bordered join-item"
+      placeholder="Szukaj (imię, nazwisko, email...)"
+      (input)="query.set(($any($event.target)).value)"
+      aria-label="Szukaj pracownika"
+    />
+    <button type="button" class="btn join-item" (click)="0">Szukaj</button>
+  </div>
+</div>
+
+@if (error()) {
+  <div class="alert alert-error mb-4">
+    <span>{{ error() }}</span>
+  </div>
+} @else if (loading()) {
+  <div class="space-y-2">
+    <div class="skeleton h-10 w-full"></div>
+    <div class="skeleton h-10 w-full"></div>
+    <div class="skeleton h-10 w-full"></div>
+  </div>
+} @else {
+
+  @if (filtered().length === 0) {
+    <div class="alert">
+      <span>Brak wyników. Zmień kryteria wyszukiwania.</span>
+    </div>
+  } @else {
+
+    <!-- Tabela na >= md -->
+    <div class="hidden md:block overflow-x-auto">
+      <table class="table w-full">
+        <thead>
+        <tr>
+          <th>
+            <button class="btn btn-ghost btn-xs" (click)="setSort('id')">
+              ID
+              @if (sortKey() === 'id') { <span class="ml-1 opacity-60">{{ sortDir() === 'asc' ? '▲' : '▼' }}</span> }
+            </button>
+          </th>
+          <th>
+            <button class="btn btn-ghost btn-xs" (click)="setSort('firstName')">
+              Imię
+              @if (sortKey() === 'firstName') { <span class="ml-1 opacity-60">{{ sortDir() === 'asc' ? '▲' : '▼' }}</span> }
+            </button>
+          </th>
+          <th>
+            <button class="btn btn-ghost btn-xs" (click)="setSort('lastName')">
+              Nazwisko
+              @if (sortKey() === 'lastName') { <span class="ml-1 opacity-60">{{ sortDir() === 'asc' ? '▲' : '▼' }}</span> }
+            </button>
+          </th>
+          <th>
+            <button class="btn btn-ghost btn-xs" (click)="setSort('email')">
+              Email
+              @if (sortKey() === 'email') { <span class="ml-1 opacity-60">{{ sortDir() === 'asc' ? '▲' : '▼' }}</span> }
+            </button>
+          </th>
+          <th>
+            <button class="btn btn-ghost btn-xs" (click)="setSort('position')">
+              Stanowisko
+              @if (sortKey() === 'position') { <span class="ml-1 opacity-60">{{ sortDir() === 'asc' ? '▲' : '▼' }}</span> }
+            </button>
+          </th>
+          <th>
+            <button class="btn btn-ghost btn-xs" (click)="setSort('hireDate')">
+              Zatrudniony
+              @if (sortKey() === 'hireDate') { <span class="ml-1 opacity-60">{{ sortDir() === 'asc' ? '▲' : '▼' }}</span> }
+            </button>
+          </th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (emp of filtered(); track emp.id) {
+            <tr class="hover">
+              <td>{{ emp.id }}</td>
+              <td>{{ emp.firstName }}</td>
+              <td>{{ emp.lastName }}</td>
+              <td><a class="link" href="mailto:{{ emp.email }}">{{ emp.email }}</a></td>
+              <td>{{ emp.position }}</td>
+              <td>{{ emp.hireDate | date:'yyyy-MM-dd' }}</td>
+              <td class="text-right">
+                <a class="btn btn-sm" [routerLink]="['/employees', emp.id]">Szczegóły</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Karty na < md -->
+    <div class="md:hidden grid grid-cols-1 gap-3">
+      @for (emp of filtered(); track emp.id) {
+        <article class="card bg-base-100 border">
+          <div class="card-body">
+            <div class="flex justify-between items-start">
+              <h3 class="card-title text-base">
+                {{ emp.firstName }} {{ emp.lastName }}
+              </h3>
+              <span class="badge">{{ emp.position }}</span>
+            </div>
+            <p class="text-sm opacity-80">
+              <a class="link" href="mailto:{{ emp.email }}">{{ emp.email }}</a>
+            </p>
+            <p class="text-sm">Zatrudniony: {{ emp.hireDate | date:'yyyy-MM-dd' }}</p>
+            <div class="card-actions justify-end">
+              <a class="btn btn-primary btn-sm" [routerLink]="['/employees', emp.id]">Szczegóły</a>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  }
+}

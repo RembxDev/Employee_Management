@@ -1,0 +1,53 @@
+<!-- navbar.html -->
+<div class="navbar bg-base-100 fade-in">
+  <!-- Left -->
+  <div class="navbar-start">
+    <a class="btn btn-ghost text-xl flex items-center gap-2">
+      <div class="border-1 bg-secondary logo p-2 rounded-xl" routerLink="/">LOL</div>
+    </a>
+  </div>
+
+  <!-- Center menu -->
+  <div class="navbar-center">
+    <ul class="menu menu-horizontal px-1 gap-x-3">
+      <li>
+        <a routerLink="/" class="flex items-center gap-2 icon-hover">
+          <fa-icon [icon]="faHome" class="text-xl"></fa-icon> Home
+        </a>
+      </li>
+      <li>
+        <details>
+          <summary class="flex items-center gap-2 icon-hover">
+            <fa-icon [icon]="faUsers" class="text-xl"></fa-icon>
+            Employee
+          </summary>
+          <ul class="p-2 bg-base-100 shadow fade-in">
+            <li><a routerLink="/employees">All Employees</a></li>
+          </ul>
+        </details>
+      </li>
+
+      <li>
+        <details>
+          <summary class="flex items-center gap-2 icon-hover">
+            <fa-icon [icon]="faBuilding" class="text-xl"></fa-icon>
+            Department
+          </summary>
+          <ul class="p-2 bg-base-100 shadow fade-in">
+            <li><a routerLink="/departments">All Departments</a></li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Right -->
+  <div class="navbar-end flex gap-2 me-4">
+    <a class="btn btn-ghost icon-hover" routerLink="/dashboard">
+      <fa-icon [icon]="faDashboard" class="text-xl"></fa-icon>
+    </a>
+    <a class="btn btn-outline btn-primary flex items-center gap-2 icon-hover" routerLink="/login">
+      <fa-icon [icon]="faSignInAlt" class="text-xl"></fa-icon> Login
+    </a>
+  </div>
+</div>

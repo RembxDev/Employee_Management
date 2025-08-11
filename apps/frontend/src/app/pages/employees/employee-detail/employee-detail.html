@@ -1,0 +1,181 @@
+<div class="max-w-md mx-auto p-6 bg-base-100 rounded-lg shadow">
+  <h2 class="text-2xl mb-4">
+    {{ id ? 'Edytuj' : 'Nowy' }} pracownik
+  </h2>
+
+  @if (loading) {
+    <div class="flex items-center gap-3">
+      <span class="loading loading-spinner"></span>
+      <span>Wczytywanie…</span>
+    </div>
+  } @else {
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="save()"
+      novalidate
+      [attr.aria-busy]="saving || null"
+    >
+
+      <!-- Imię -->
+      <div class="form-control mb-3">
+        <label class="label" for="firstName">
+          <span class="label-text">Imię</span>
+        </label>
+        <input
+          id="firstName"
+          name="firstName"
+          type="text"
+          class="input input-bordered w-full"
+          formControlName="firstName"
+          autocomplete="given-name"
+          required
+          [attr.aria-invalid]="form.get('firstName')?.invalid || null"
+          [attr.aria-describedby]="form.get('firstName')?.invalid ? 'firstName-error' : null"
+        />
+        @if (form.get('firstName')?.invalid && (form.get('firstName')?.touched || submitted)) {
+          <div class="label" aria-live="polite">
+            <span id="firstName-error" class="label-text-alt text-error">
+              Podaj poprawne imię (wymagane)
+            </span>
+          </div>
+        }
+      </div>
+
+      <!-- Nazwisko -->
+      <div class="form-control mb-3">
+        <label class="label" for="lastName">
+          <span class="label-text">Nazwisko</span>
+        </label>
+        <input
+          id="lastName"
+          name="lastName"
+          type="text"
+          class="input input-bordered w-full"
+          formControlName="lastName"
+          autocomplete="family-name"
+          required
+          [attr.aria-invalid]="form.get('lastName')?.invalid || null"
+          [attr.aria-describedby]="form.get('lastName')?.invalid ? 'lastName-error' : null"
+        />
+        @if (form.get('lastName')?.invalid && (form.get('lastName')?.touched || submitted)) {
+          <div class="label" aria-live="polite">
+            <span id="lastName-error" class="label-text-alt text-error">
+              Podaj poprawne nazwisko (wymagane)
+            </span>
+          </div>
+        }
+      </div>
+
+      <!-- Email -->
+      <div class="form-control mb-3">
+        <label class="label" for="email">
+          <span class="label-text">Email</span>
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          class="input input-bordered w-full"
+          formControlName="email"
+          autocomplete="email"
+          inputmode="email"
+          required
+          [attr.aria-invalid]="form.get('email')?.invalid || null"
+          [attr.aria-describedby]="form.get('email')?.invalid ? 'email-error' : null"
+        />
+        @if (form.get('email')?.invalid && (form.get('email')?.touched || submitted)) {
+          <div class="label" aria-live="polite">
+            <span id="email-error" class="label-text-alt text-error">
+              Podaj poprawny adres email
+            </span>
+          </div>
+        }
+      </div>
+
+      <!-- Telefon -->
+      <div class="form-control mb-3">
+        <label class="label" for="phone">
+          <span class="label-text">Telefon</span>
+        </label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          class="input input-bordered w-full"
+          formControlName="phone"
+          autocomplete="tel"
+          inputmode="tel"
+          placeholder="+48 123 456 789"
+          [attr.aria-invalid]="form.get('phone')?.invalid || null"
+          [attr.aria-describedby]="form.get('phone')?.invalid ? 'phone-error' : null"
+        />
+        @if (form.get('phone')?.invalid && (form.get('phone')?.touched || submitted)) {
+          <div class="label" aria-live="polite">
+            <span id="phone-error" class="label-text-alt text-error">
+              Dozwolone cyfry, spacje i „-”
+            </span>
+          </div>
+        }
+      </div>
+
+      <!-- Stanowisko -->
+      <div class="form-control mb-3">
+        <label class="label" for="position">
+          <span class="label-text">Stanowisko</span>
+        </label>
+        <input
+          id="position"
+          name="position"
+          type="text"
+          class="input input-bordered w-full"
+          formControlName="position"
+          autocomplete="organization-title"
+          required
+          [attr.aria-invalid]="form.get('position')?.invalid || null"
+          [attr.aria-describedby]="form.get('position')?.invalid ? 'position-error' : null"
+        />
+        @if (form.get('position')?.invalid && (form.get('position')?.touched || submitted)) {
+          <div class="label" aria-live="polite">
+            <span id="position-error" class="label-text-alt text-error">
+              Podaj stanowisko (wymagane)
+            </span>
+          </div>
+        }
+      </div>
+
+      <!-- Data zatrudnienia -->
+      <div class="form-control mb-3">
+        <label class="label" for="hireDate">
+          <span class="label-text">Data zatrudnienia</span>
+        </label>
+        <input
+          id="hireDate"
+          name="hireDate"
+          type="date"
+          class="input input-bordered w-full"
+          formControlName="hireDate"
+          required
+          [attr.aria-invalid]="form.get('hireDate')?.invalid || null"
+          [attr.aria-describedby]="form.get('hireDate')?.invalid ? 'hireDate-error' : null"
+        />
+        @if (form.get('hireDate')?.invalid && (form.get('hireDate')?.touched || submitted)) {
+          <div class="label" aria-live="polite">
+            <span id="hireDate-error" class="label-text-alt text-error">
+              Wybierz datę zatrudnienia
+            </span>
+          </div>
+        }
+      </div>
+
+      <!-- Akcje -->
+      <div class="flex justify-between mt-6">
+        <a routerLink="/employees" class="btn btn-ghost">Anuluj</a>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid || saving">
+          @if (saving) { <span class="loading loading-spinner"></span> }
+          <span>Zapisz</span>
+        </button>
+      </div>
+    </form>
+  }
+</div>

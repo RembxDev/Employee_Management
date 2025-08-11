@@ -1,0 +1,20 @@
+<div class="overflow-x-auto">
+  <table class="table w-full">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nazwa</th>
+      <th>Lokacja</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (dep of departments; track dep.id) {
+        <tr class="hover">
+          <td>{{ dep.id }}</td>
+          <td>{{ dep.name }}</td>
+          <td>{{ dep.location || '-' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

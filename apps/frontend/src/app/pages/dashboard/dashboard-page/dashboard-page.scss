@@ -1,0 +1,6 @@
+:host {
+  @apply block grow bg-base-100 text-base-content;
+}
+.card {
+  @apply bg-secondary text-secondary-content rounded-lg p-4;
+}
